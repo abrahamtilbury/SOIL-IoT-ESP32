@@ -351,6 +351,7 @@ void maintainWiFi()
   }
 
   // Safety: if communications are down, stop the automatic pump.
+  weatherReceived = false;
   setPump(false);
 
   if (millis() - lastWiFiAttempt >= 5000)
