@@ -140,7 +140,7 @@ int readSoilPercent()
 void setPump(bool requestedOn)
 {
   // Emergency stop ALWAYS has highest priority.
-  if (emergencyStopLatched)
+  if (emergencyStopLatched || emergencyStopPending)
   {
     requestedOn = false;
   }
@@ -196,7 +196,9 @@ void updatePumpControl()
     return;
   }
 
-  // Pump control requires live Wi-Fi and MQTT unless emergency stop is active.
+  // ----------------------------------------------------------
+  // PRIORITY 2: COMMUNICATIONS FAIL-SAFE
+  // ----------------------------------------------------------
   if (WiFi.status() != WL_CONNECTED || !mqttClient.connected())
   {
     setPump(false);
@@ -204,7 +206,7 @@ void updatePumpControl()
   }
 
   // ----------------------------------------------------------
-  // PRIORITY 2: MANUAL MQTT OVERRIDE
+  // PRIORITY 3: MANUAL MQTT OVERRIDE
   // ----------------------------------------------------------
   if (manualOverride)
   {
@@ -215,7 +217,7 @@ void updatePumpControl()
   
   
   // ----------------------------------------------------------
-  // PRIORITY 3: AUTOMATIC CONTROL
+  // PRIORITY 4: AUTOMATIC CONTROL
   // ----------------------------------------------------------
 
   // Fail safe:
