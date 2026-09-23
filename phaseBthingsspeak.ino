@@ -26,19 +26,19 @@ DHT dht(DHT_PIN, DHT22);
 //
 // Physical ESP32:
 //   Replace these with your Wi-Fi / hotspot details.
-const char* WIFI_SSID     = "Wokwi-GUEST";
-const char* WIFI_PASSWORD = "";
+const char* WIFI_SSID     = "Abe's iPhone";
+const char* WIFI_PASSWORD = "nintendo";
 
 // -------------------- THINGSPEAK --------------------
 const char* THINGSPEAK_URL = "http://api.thingspeak.com/update";
 
 // Replace with your ThingSpeak WRITE API key.
-const char* THINGSPEAK_WRITE_KEY = "YOUR_WRITE_API_KEY";
+const char* THINGSPEAK_WRITE_KEY = "KC3SZFBU0P52006L";
 
 // -------------------- SOIL CALIBRATION --------------------
 // Replace these after testing your real sensor.
-const int SOIL_DRY = 3000;
-const int SOIL_WET = 1300;
+const int SOIL_DRY = 0;
+const int SOIL_WET = 1267;
 
 int readSoilPercent()
 {
