@@ -382,8 +382,10 @@ void maintainMQTT()
     return;
   }
 
-  // Safety: no broker means we may have stale weather data.
+  // Safety: no broker means we may have stale weather or manual commands.
   weatherReceived = false;
+  manualOverride = false;
+  manualPumpOn = false;
   setPump(false);
 
   // Try once every 5 seconds without freezing the main loop.
