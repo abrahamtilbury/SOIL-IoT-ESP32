@@ -26,9 +26,9 @@
 // PIN SETUP
 // ============================================================
 
-const int DHT_PIN   = 21;
+const int DHT_PIN   = 4;
 const int SOIL_PIN  = 34;
-const int ESTOP_PIN = 18;
+const int ESTOP_PIN = 25;
 
 const int PUMP_IN1  = 26;
 const int PUMP_IN2  = 27;
