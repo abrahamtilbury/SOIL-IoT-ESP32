@@ -38,19 +38,12 @@ DHT dht(DHT_PIN, DHT22);
 // ============================================================
 // WIFI
 // ============================================================
-
-// For the physical ESP32, replace these with the Wi-Fi network
-// used by both the ESP32 and the computer running Mosquitto.
-const char* WIFI_SSID     = "YOUR_WIFI_NAME";
-const char* WIFI_PASSWORD = "YOUR_WIFI_PASSWORD";
+const char* WIFI_SSID     = "Abe's iPhone";
+const char* WIFI_PASSWORD = "nintendo";
 
 // ============================================================
 // MQTT / MOSQUITTO
 // ============================================================
-
-// IMPORTANT:
-// This must be the LAN IP address of the computer running Mosquitto.
-// Do NOT use "localhost" because localhost on the ESP32 means the ESP32.
 const char* MQTT_BROKER_IP = "172.20.10.12";
 const int   MQTT_PORT      = 1883;
 
@@ -70,8 +63,8 @@ PubSubClient mqttClient(wifiClient);
 // ============================================================
 
 // Replace with values measured from your real sensor.
-const int SOIL_DRY = 3000;
-const int SOIL_WET = 1300;
+const int SOIL_DRY = 0;
+const int SOIL_WET = 1268;
 
 // The assessment lets you choose the threshold.
 // Below 35% = soil is considered dry.
@@ -116,13 +109,10 @@ bool emergencyMessagePrinted = false;
 // ============================================================
 // EMERGENCY STOP INTERRUPT
 // ============================================================
-
-// Keep interrupt code VERY short.
-// Pressing the button connects GPIO18 to GND.
+// Pressing the button connects GPIO25 to GND.
 // INPUT_PULLUP means:
 //   normal  = HIGH
 //   pressed = LOW
-//
 // FALLING therefore means the button has just been pressed.
 void IRAM_ATTR emergencyStopISR()
 {
