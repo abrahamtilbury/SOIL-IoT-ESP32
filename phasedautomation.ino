@@ -103,20 +103,20 @@ bool pumpOn = false;
 // Emergency stop is written by an interrupt.
 // "volatile" tells the compiler this value can change unexpectedly.
 volatile bool emergencyStopLatched = false;
-
+volatile bool emergencyStopPending = false;
 bool emergencyMessagePrinted = false;
 
 // ============================================================
 // EMERGENCY STOP INTERRUPT
 // ============================================================
-// Pressing the button connects GPIO25 to GND.
-// INPUT_PULLUP means:
-//   normal  = HIGH
-//   pressed = LOW
-// FALLING therefore means the button has just been pressed.
+// Pressing the button connects GPIO25 to 3.3 V.
+// INPUT_PULLDOWN means:
+//   normal  = LOW
+//   pressed = HIGH
+// RISING therefore means the button has just been pressed.
 void IRAM_ATTR emergencyStopISR()
 {
-  emergencyStopLatched = true;
+  emergencyStopPending = true;
 }
 
 // ============================================================
@@ -352,6 +352,8 @@ void maintainWiFi()
 
   // Safety: if communications are down, stop the automatic pump.
   weatherReceived = false;
+  manualOverride = false;
+  manualPumpOn = false;
   setPump(false);
 
   if (millis() - lastWiFiAttempt >= 5000)
@@ -487,13 +489,13 @@ void setup()
   pumpOn = false;
 
   // Emergency stop input.
-  pinMode(ESTOP_PIN, INPUT_PULLUP);
+  pinMode(ESTOP_PIN, INPUT_PULLDOWN);
 
   // Interrupt fires immediately when the button is pressed.
   attachInterrupt(
     digitalPinToInterrupt(ESTOP_PIN),
     emergencyStopISR,
-    FALLING
+    RISING
   );
 
   // Connect to Wi-Fi.
@@ -512,6 +514,19 @@ void setup()
 
 void loop()
 {
+  if (emergencyStopPending)
+  {
+    setPump(false);
+  
+    delay(20);
+  
+    if (digitalRead(ESTOP_PIN) == HIGH)
+    {
+      emergencyStopLatched = true;
+    }
+  
+    emergencyStopPending = false;
+  }
   // ----------------------------------------------------------
   // HIGHEST PRIORITY: EMERGENCY STOP
   // ----------------------------------------------------------
