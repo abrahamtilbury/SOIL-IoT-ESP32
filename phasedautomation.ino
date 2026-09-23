@@ -51,7 +51,7 @@ const char* WIFI_PASSWORD = "YOUR_WIFI_PASSWORD";
 // IMPORTANT:
 // This must be the LAN IP address of the computer running Mosquitto.
 // Do NOT use "localhost" because localhost on the ESP32 means the ESP32.
-const char* MQTT_BROKER_IP = "192.168.1.100";
+const char* MQTT_BROKER_IP = "172.20.10.12";
 const int   MQTT_PORT      = 1883;
 
 // ESP32 -> Node-RED
