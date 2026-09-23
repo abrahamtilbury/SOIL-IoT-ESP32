@@ -196,6 +196,13 @@ void updatePumpControl()
     return;
   }
 
+  // Pump control requires live Wi-Fi and MQTT unless emergency stop is active.
+  if (WiFi.status() != WL_CONNECTED || !mqttClient.connected())
+  {
+    setPump(false);
+    return;
+  }
+
   // ----------------------------------------------------------
   // PRIORITY 2: MANUAL MQTT OVERRIDE
   // ----------------------------------------------------------
@@ -205,6 +212,8 @@ void updatePumpControl()
     return;
   }
 
+  
+  
   // ----------------------------------------------------------
   // PRIORITY 3: AUTOMATIC CONTROL
   // ----------------------------------------------------------
@@ -371,6 +380,7 @@ void maintainMQTT()
   }
 
   // Safety: no broker means we may have stale weather data.
+  weatherReceived = false;
   setPump(false);
 
   // Try once every 5 seconds without freezing the main loop.
@@ -392,6 +402,7 @@ void maintainMQTT()
     mqttClient.subscribe(TOPIC_PUMP_CMD);
 
     Serial.println("MQTT subscriptions active.");
+    mqttClient.publish(TOPIC_PUMP_STATUS, pumpOn ? "ON" : "OFF", true);
   }
   else
   {
