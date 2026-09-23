@@ -13,7 +13,7 @@
 #include <DHT.h>
 
 // -------------------- PIN SETUP --------------------
-const int DHT_PIN  = 21;
+const int DHT_PIN  = 4;
 const int SOIL_PIN = 34;
 
 DHT dht(DHT_PIN, DHT22);
