@@ -21,8 +21,8 @@ DHT dht(DHT_PIN, DHT22);
 // -------------------- SOIL CALIBRATION --------------------
 // Replace these after testing your real sensor.
 // Dry soil usually gives a different raw value from wet soil.
-const int SOIL_DRY = 3000;
-const int SOIL_WET = 1300;
+const int SOIL_DRY = 0;
+const int SOIL_WET = 1267;
 
 // Convert the raw ADC reading into an easy 0-100% value.
 int readSoilPercent(int rawValue)
