@@ -1,9 +1,8 @@
 /*
   IoT Soil Management System
-  PART 1 / PHASE B - ThingSpeak cloud monitoring
+  PHASE B - ThingSpeak cloud monitoring
 
-  Requirements covered:
-  - Read temperature, humidity and soil moisture
+  - Reads temperature, humidity and soil moisture
   - Connect ESP32 to Wi-Fi
   - Upload all three values to ThingSpeak
   - Upload every 30 seconds
@@ -20,12 +19,6 @@ const int SOIL_PIN = 34;
 DHT dht(DHT_PIN, DHT22);
 
 // -------------------- WIFI --------------------
-// Wokwi:
-//   SSID = "Wokwi-GUEST"
-//   password = ""
-//
-// Physical ESP32:
-//   Replace these with your Wi-Fi / hotspot details.
 const char* WIFI_SSID     = "Abe's iPhone";
 const char* WIFI_PASSWORD = "nintendo";
 
@@ -36,7 +29,6 @@ const char* THINGSPEAK_URL = "http://api.thingspeak.com/update";
 const char* THINGSPEAK_WRITE_KEY = "KC3SZFBU0P52006L";
 
 // -------------------- SOIL CALIBRATION --------------------
-// Replace these after testing your real sensor.
 const int SOIL_DRY = 0;
 const int SOIL_WET = 1267;
 
@@ -128,6 +120,6 @@ void loop()
     }
   }
 
-  // Assessment requirement: upload every 30 seconds.
+  // upload every 30 seconds.
   delay(30000);
 }
