@@ -25,13 +25,10 @@ const int SOIL_DRY = 3000;
 const int SOIL_WET = 1300;
 
 // Convert the raw ADC reading into an easy 0-100% value.
-int readSoilPercent()
+int readSoilPercent(int rawValue)
 {
-  int rawValue = analogRead(SOIL_PIN);
-
   int percent = map(rawValue, SOIL_DRY, SOIL_WET, 0, 100);
   percent = constrain(percent, 0, 100);
-
   return percent;
 }
 
@@ -51,7 +48,7 @@ void loop()
 
   // Read the soil sensor.
   int soilRaw     = analogRead(SOIL_PIN);
-  int soilPercent = readSoilPercent();
+  int soilPercent = readSoilPercent(soilRaw);
 
   // DHT22 returns NaN if a reading fails.
   if (isnan(temperature) || isnan(humidity))
