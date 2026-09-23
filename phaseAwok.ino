@@ -19,8 +19,6 @@ const int SOIL_PIN = 34;
 DHT dht(DHT_PIN, DHT22);
 
 // -------------------- SOIL CALIBRATION --------------------
-// Replace these after testing your real sensor.
-// Dry soil usually gives a different raw value from wet soil.
 const int SOIL_DRY = 0;
 const int SOIL_WET = 1267;
 
